@@ -1,0 +1,45 @@
+.single-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px 12px;
+  margin-top: 10px;
+
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #e2e2e2;
+
+  transition: 0.2s;
+}
+
+.single-item:hover {
+  background: #f0f0f0;
+}
+
+.single-item span {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btns button {
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.edit-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background: #f44336;
+  color: white;
+}
