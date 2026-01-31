@@ -2,12 +2,13 @@ import { groceryItems } from "./data.js";
 import { createItems } from "./item.js";
 
 // State
-let items = [...groceryItems];
+let items = getLocalStorage();
 let editFlag = false;
 let editID = "";
 
 // Selectors
 const form = document.getElementById("grocery-form");
+const alert = document.querySelector(".alert");
 const itemInput = document.getElementById("item-input");
 const submitBtn = form.querySelector("button");
 const clearBtn = document.getElementById("clear-btn");
@@ -36,6 +37,7 @@ function addItem(e) {
     items.push(newItem);
     render();
     addToLocalStorage(items);
+    displayAlert("item added to the list", "success");
     setBackToDefault();
   } else if (value && editFlag) {
     items = items.map((item) => {
@@ -46,14 +48,29 @@ function addItem(e) {
     });
     render();
     addToLocalStorage(items);
+    displayAlert("value changed", "success");
     setBackToDefault();
+  } else {
+    displayAlert("please enter value", "danger");
   }
+}
+
+function displayAlert(text, action) {
+  alert.textContent = text;
+  alert.classList.add(`alert-${action}`);
+
+  // remove alert
+  setTimeout(function () {
+    alert.textContent = "";
+    alert.classList.remove(`alert-${action}`);
+  }, 1000);
 }
 
 function clearItems() {
   items = [];
   render();
   addToLocalStorage(items);
+  displayAlert("empty list", "danger");
   setBackToDefault();
 }
 
@@ -61,6 +78,7 @@ function deleteItem(id) {
   items = items.filter((item) => item.id !== id);
   render();
   addToLocalStorage(items);
+  displayAlert("item removed", "danger");
   setBackToDefault();
 }
 
@@ -115,8 +133,13 @@ function setBackToDefault() {
 }
 
 function addToLocalStorage(items) {
-  // Optional: Persist to local storage if desired, keeping it simple for now as requested.
-  // localStorage.setItem("list", JSON.stringify(items));
+  localStorage.setItem("list", JSON.stringify(items));
+}
+
+function getLocalStorage() {
+  return localStorage.getItem("list")
+    ? JSON.parse(localStorage.getItem("list"))
+    : [];
 }
 
 // Initialize App
