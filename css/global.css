@@ -17,3 +17,39 @@ body {
 button {
   cursor: pointer;
 }
+
+.btn {
+  /* general button styles */
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+.submit-btn {
+  background-color: #a5d8ff;
+  color: #102a43;
+}
+
+.submit-btn:hover {
+  background-color: #74c0fc;
+  color: #102a43;
+}
+
+.clear-btn {
+  background: transparent;
+  color: #e12d39;
+  border: 1px solid #e12d39;
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.clear-btn:hover {
+  background: #ffe3e3;
+  color: #c92a2a;
+}

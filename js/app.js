@@ -1,6 +1,3 @@
-import { groceryItems } from "./data.js";
-import { createItems } from "./item.js";
-
 // State
 let items = getLocalStorage();
 let editFlag = false;
@@ -25,6 +22,41 @@ function render() {
   appContainer.innerHTML = "";
   const itemsElement = createItems(items);
   appContainer.appendChild(itemsElement);
+}
+
+function createItems(itemsArray) {
+  const container = document.createElement("div");
+  container.className = "items";
+
+  itemsArray.forEach((item) => {
+    const itemElement = createSingleItem(item);
+    container.appendChild(itemElement);
+  });
+
+  return container;
+}
+
+function createSingleItem(item) {
+  const div = document.createElement("div");
+  div.className = "single-item";
+  div.dataset.id = item.id;
+
+  div.innerHTML = `
+    <input type="checkbox" ${item.completed ? "checked" : ""} />
+    <span style="text-decoration: ${item.completed ? "line-through" : "none"}">
+      ${item.name}
+    </span>
+    <div class="btns">
+      <button class="btn edit-btn" type="button">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="btn delete-btn" type="button">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+  `;
+
+  return div;
 }
 
 function addItem(e) {
@@ -108,9 +140,12 @@ function handleItemAction(e) {
   if (!itemElement) return;
   const id = itemElement.dataset.id;
 
-  if (target.closest(".remove-btn")) {
+  // Handle delete button click (check for button or icon inside it)
+  if (target.closest(".delete-btn")) {
     deleteItem(id);
-  } else if (target.closest(".edit-btn")) {
+  }
+  // Handle edit button click
+  else if (target.closest(".edit-btn")) {
     editItem(id);
   }
 }
